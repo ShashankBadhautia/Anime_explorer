@@ -75,7 +75,7 @@ https://api.jikan.moe/v4/ or https://api.jikan.moe/v4/anime?q= {anime name}
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/anime-explorer.git
+   git clone https://github.com/ShashankBadhautia/Anime_explorer.git
    ```
 
 2. Open the project folder:
