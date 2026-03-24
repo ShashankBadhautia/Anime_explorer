@@ -81,7 +81,7 @@ https://api.jikan.moe/v4/ or https://api.jikan.moe/v4/anime?q= {anime name}
 2. Open the project folder:
 
    ```bash
-   cd anime-explorer
+   cd Anime_explorer
    ```
 
 3. Run the project:
