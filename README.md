@@ -112,7 +112,3 @@ The application is designed to work on:
 ## Author
 
 Shashank Badhautia
-
-```python
-print("hello")
-```
