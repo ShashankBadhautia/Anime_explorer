@@ -18,7 +18,7 @@ async function showAnime() {
             <div class="anime-card">
                 <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
                 <div class="card-info">
-                    <h3>${anime.title}</h3>
+                    <h3>${anime.title_english || anime.title}</h3>
                     <p>Score: ${anime.score || 'N/A'}</p>
                 </div>
             </div>
