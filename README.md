@@ -2,109 +2,163 @@
 
 ## Project Overview
 
-Anime Explorer is a web application that allows users to search, filter, and explore anime using real-time data from the Jikan API. The application provides an interactive and user-friendly interface to discover anime based on various criteria.
+Anime Explorer is a dynamic web application that allows users to search, filter, sort, and explore anime using real-time data from the Jikan API. It provides a smooth and interactive experience with features like infinite scrolling, advanced filtering, and responsive UI.
 
 ---
 
 ## Purpose
 
-The goal of this project is to demonstrate:
+This project demonstrates:
 
 * JavaScript API integration using `fetch`
 * Use of Array Higher-Order Functions (HOFs)
-* Dynamic UI rendering
-* Responsive web design
+* Dynamic DOM manipulation
+* State management for search, filters, and pagination
+* Responsive and interactive UI design
 
 ---
 
 ## API Used
 
-This project uses the Jikan API, an unofficial API for MyAnimeList.
+This project uses the Jikan API (Unofficial MyAnimeList API)
 
-Example endpoint:
-https://api.jikan.moe/v4/ or https://api.jikan.moe/v4/anime?q= {anime name}
+Base URL:
+https://api.jikan.moe/v4/
+
+Example:
+https://api.jikan.moe/v4/anime?q=naruto
 
 ---
 
 ## Features
 
-### Search
+### 🔍 Search
 
 * Search anime by title using keywords
+* Press Enter or click search button
+* Real-time API fetching
 
-### Filtering
+---
 
-* Filter anime by:
+### 🔥 Trending Anime
 
-  * Genre
-  * Score (rating)
-  * Status (airing/completed)
-  * Type (TV, Movie, OVA)
+* Displays top anime on initial load
+* Infinite scrolling to load more content dynamically
 
-### Sorting
+---
 
-* Sort anime by:
+### ♾️ Infinite Scroll
 
-  * Rating (ascending/descending)
-  * Popularity
-  * Alphabetical order
+* Automatically loads more anime on scroll
+* Works for:
 
-### User Interactions
+  * Trending anime
+  * Search results
 
-* Add/remove anime from favorites
-* View more details about selected anime
+---
 
-### Theme Toggle
+### ⚙️ Advanced Filtering
 
-* Switch between Dark Mode and Light Mode
-* Saves user preference using localStorage
+* Toggleable filter panel
+* Filter by:
+
+  * Type (TV, Movie, OVA, Special)
+
+---
+
+### 📊 Sorting
+
+* Sort search results by:
+
+  * Title (A → Z / Z → A)
+  * Score (High → Low / Low → High)
+
+---
+
+### 🔁 Mode Switching
+
+* Seamlessly switch between:
+
+  * Search mode
+  * Trending mode
+
+* "Trending" button resets the application state
+
+---
+
+### 🎯 User Experience Enhancements
+
+* Smooth UI transitions
+* Hover effects on anime cards
+* Clean and minimal design
+* Scroll-to-top reset behavior
 
 ---
 
 ## Technologies Used
 
 * HTML5
-* CSS3 (or Tailwind CSS)
+* CSS3 (Custom properties / variables)
 * JavaScript (ES6+)
 * Fetch API
 
 ---
 
-## Project Setup
+## Project Structure
+
+* `index.html` → Structure
+* `style.css` → Styling
+* `script.js` → Logic (API calls, UI rendering, state handling)
+
+---
+
+## How to Run
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/ShashankBadhautia/Anime_explorer.git
-   ```
+```bash
+git clone https://github.com/ShashankBadhautia/Anime_explorer.git
+```
 
-2. Open the project folder:
+2. Open the folder:
 
-   ```bash
-   cd Anime_explorer
-   ```
+```bash
+cd Anime_explorer
+```
 
-3. Run the project:
+3. Run the app:
 
-   * Open `index.html` in your browser
+* Open `index.html` in your browser
 
 ---
 
 ## Responsiveness
 
-The application is designed to work on:
+* Fully responsive design
+* Works on:
 
-* Mobile devices
-* Tablets
-* Desktop screens
+  * Mobile devices
+  * Tablets
+  * Desktop screens
+
+---
+
+## Limitations
+
+* Jikan API rate limits may affect rapid scrolling
+* Sorting is applied per page (not globally across all results)
+* Filtering supports one type at a time (API limitation)
 
 ---
 
 ## Future Enhancements
 
-* Pagination for large datasets
-* Debounced search for better performance
-* Infinite scrolling
+* Genre-based filtering
+* Global sorting across all pages
+* Debounced search (auto search while typing)
+* Anime detail modal (click to view full info)
+* Favorites system using localStorage
+* Loading skeleton UI
 * Progressive Web App (PWA) support
 
 ---
