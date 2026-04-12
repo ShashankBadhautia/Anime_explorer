@@ -46,6 +46,24 @@ body{
 #search-button:hover{
     background-color: var(--secondary-color);
 }
+
+#reset-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#reset-button:hover {
+    background-color: var(--primary-color);
+}
+
+
+
 #results-container{
     display: flex;
     flex-wrap: wrap;
