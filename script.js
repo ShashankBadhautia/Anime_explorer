@@ -12,16 +12,24 @@ let currentQuery = "";
 let isSearchMode = false;
 
 
-async function searchAnime(query) {
-    isSearchMode = true;
+async function searchAnime(query, isNewSearch = false) {
+    if (isFetching) return;
+
+    isFetching = true;
 
     try {
-        let response = await fetch(URL + `anime?q=${query}`);
+        if (isNewSearch) {
+            resultsContainer.innerHTML = "";
+            page = 0;
+            currentQuery = query;
+            isSearchMode = true;
+        }
+
+        page++;
+
+        let response = await fetch(URL + `anime?q=${currentQuery}&page=${page}`);
         let data = await response.json();
         let animeList = data.data;
-
-        resultsContainer.innerHTML = ""; // clear old results
-        page = 0; // reset infinite scroll
 
         let animeHTML = animeList.map(anime => `
             <div class="anime-card">
@@ -33,10 +41,12 @@ async function searchAnime(query) {
             </div>
         `).join("");
 
-        resultsContainer.innerHTML = animeHTML;
+        resultsContainer.insertAdjacentHTML("beforeend", animeHTML);
 
     } catch (error) {
         console.error("Search error:", error);
+    } finally {
+        isFetching = false;
     }
 }
 
@@ -72,12 +82,10 @@ async function showAnime() {
         }
     }
 
-    function resetToTrending() {
-    resultsContainer.innerHTML = "";
-    page = 0;
-    isSearchMode = false;
-    showAnime();
-    }
+    resetButton.addEventListener("click", () => {
+    searchInput.value = ""; // optional: clear search box
+    resetToTrending();
+    });
 
     searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
@@ -86,24 +94,34 @@ async function showAnime() {
     });
     
     searchButton.addEventListener("click", () => {
-        let query = searchInput.value.trim();
-        if (query !== "") {
-            searchAnime(query);
-        }
+    let query = searchInput.value.trim();
+    if (query !== "") {
+        searchAnime(query, true); // true = new search
+    }
     });
 
-    resetButton.addEventListener("click", () => {
-    searchInput.value = ""; // clear input
-    resetToTrending(); // call your function
-    });
+    function resetToTrending() {
+    resultsContainer.innerHTML = "";
+    page = 0;
+    isSearchMode = false;
+    currentQuery = "";
+    
+    window.scrollTo(0, 0); // scroll to top
+
+    showAnime();
+    }
     
     window.addEventListener('scroll', () => {
 
-        if (isSearchMode) return;
-        
-        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
-            showAnime();
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
+
+        if (isSearchMode) {
+            searchAnime(currentQuery); // load more search results
+        } else {
+            showAnime(); // load trending
         }
+
+    }
     });
     
     
