@@ -6,9 +6,10 @@ let isFetching = false;
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 const resetButton = document.getElementById("reset-button");
+const advancedButton = document.getElementById("advanced-button");
+const filtersContainer = document.getElementById("filters-container");
 
 let currentQuery = "";
-
 let isSearchMode = false;
 
 
@@ -27,7 +28,17 @@ async function searchAnime(query, isNewSearch = false) {
 
         page++;
 
-        let response = await fetch(URL + `anime?q=${currentQuery}&page=${page}`);
+        let types = getSelectedTypes();
+        let typeQuery = "";
+
+        if (types.length === 1) {
+            typeQuery = `&type=${types[0]}`;
+        }
+
+        let response = await fetch(
+            URL + `anime?q=${currentQuery}&page=${page}${typeQuery}`
+        );
+
         let data = await response.json();
         let animeList = data.data;
 
@@ -50,12 +61,31 @@ async function searchAnime(query, isNewSearch = false) {
     }
 }
 
+advancedButton.addEventListener("click", () => {
+    if (filtersContainer.style.display === "none") {
+        filtersContainer.style.display = "flex";
+    } else {
+        filtersContainer.style.display = "none";
+    }
+});
+
+function getSelectedTypes() {
+    const checkboxes = document.querySelectorAll("#filters-container input:checked");
+    return Array.from(checkboxes).map(cb => cb.value);
+}
 
 async function showAnime() {
     if (isFetching) return;
     
     isFetching = true;
     page++;
+
+    let types = getSelectedTypes();
+
+    let typeQuery = "";
+    if (types.length === 1) {
+        typeQuery = `&type=${types[0]}`;
+    }
     
     try {
         let response = await fetch(URL + `top/anime?page=${page}`);
@@ -123,6 +153,14 @@ async function showAnime() {
 
     }
     });
+
+    document.querySelectorAll("#filters-container input").forEach(cb => {
+    cb.addEventListener("change", () => {
+        if (isSearchMode) {
+            searchAnime(currentQuery, true); // reload with filters
+        }
+        });
+    });
     
     
-    showAnime();
+showAnime();

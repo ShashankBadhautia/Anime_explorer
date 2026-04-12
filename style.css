@@ -62,6 +62,27 @@ body{
     background-color: var(--primary-color);
 }
 
+#advanced-button {
+    margin-left: 10px;
+    padding: 10px;
+    background-color: var(--tertiary-color);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+#filters-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    color: white;
+}
+
+#filters-container label {
+    cursor: pointer;
+}
 
 
 #results-container{
