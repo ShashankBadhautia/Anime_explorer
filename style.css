@@ -84,6 +84,16 @@ body{
     cursor: pointer;
 }
 
+#sort-select {
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+
 
 #results-container{
     display: flex;

@@ -9,6 +9,8 @@ const resetButton = document.getElementById("reset-button");
 const advancedButton = document.getElementById("advanced-button");
 const filtersContainer = document.getElementById("filters-container");
 
+const sortSelect = document.getElementById("sort-select");
+
 let currentQuery = "";
 let isSearchMode = false;
 
@@ -42,7 +44,25 @@ async function searchAnime(query, isNewSearch = false) {
         let data = await response.json();
         let animeList = data.data;
 
-        let animeHTML = animeList.map(anime => `
+        let sortedList = [...animeList];
+
+        let sortValue = sortSelect.value;
+
+        if (sortValue === "title_asc") {
+            sortedList.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+        }
+        else if (sortValue === "title_desc") {
+            sortedList.sort((a, b) => (b.title || "").localeCompare(a.title || ""));
+        }
+        else if (sortValue === "score_desc") {
+            sortedList.sort((a, b) => (b.score || 0) - (a.score || 0));
+        }
+        else if (sortValue === "score_asc") {
+            sortedList.sort((a, b) => (a.score || 0) - (b.score || 0));
+        }
+
+
+        let animeHTML = sortedList.map(anime => `
             <div class="anime-card">
                 <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
                 <div class="card-info">
@@ -112,25 +132,25 @@ async function showAnime() {
         }
     }
 
-    resetButton.addEventListener("click", () => {
-    searchInput.value = ""; // optional: clear search box
-    resetToTrending();
-    });
+resetButton.addEventListener("click", () => {
+searchInput.value = ""; // optional: clear search box
+resetToTrending();
+});
 
-    searchInput.addEventListener("keypress", (e) => {
+searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         searchButton.click();
     }
-    });
+});
     
-    searchButton.addEventListener("click", () => {
+searchButton.addEventListener("click", () => {
     let query = searchInput.value.trim();
     if (query !== "") {
         searchAnime(query, true); // true = new search
     }
-    });
+});
 
-    function resetToTrending() {
+function resetToTrending() {
     resultsContainer.innerHTML = "";
     page = 0;
     isSearchMode = false;
@@ -139,9 +159,9 @@ async function showAnime() {
     window.scrollTo(0, 0); // scroll to top
 
     showAnime();
-    }
+}
     
-    window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {
 
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
 
@@ -152,15 +172,20 @@ async function showAnime() {
         }
 
     }
-    });
+});
+sortSelect.addEventListener("change", () => {
+    if (isSearchMode) {
+        searchAnime(currentQuery, true); // reload sorted results
+    }
+});
 
-    document.querySelectorAll("#filters-container input").forEach(cb => {
+document.querySelectorAll("#filters-container input").forEach(cb => {
     cb.addEventListener("change", () => {
         if (isSearchMode) {
             searchAnime(currentQuery, true); // reload with filters
         }
         });
-    });
+});
     
     
 showAnime();
